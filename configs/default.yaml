@@ -1,0 +1,44 @@
+data:
+  # 处理后的轨迹文件目录
+  train_dir: data/processed/train
+  val_dir: data/processed/val
+  # 轨迹长度设置
+  obs_len: 8
+  pred_len: 12
+  # 采样与邻居构建参数
+  skip: 1
+  min_ped: 1
+  neighbor_radius: 2.0
+  max_neighbors: 16
+  # 场景语义图（可选）
+  scene_dir: null
+  scene_ext: .npy
+
+model:
+  # 网络维度与模块开关
+  hidden_dim: 64
+  scene_dim: 128
+  latent_dim: 16
+  use_scene: true
+  use_social: true
+
+train:
+  # 训练超参数与保存路径
+  batch_size: 32
+  epochs: 20
+  lr: 0.001
+  beta: 1.0
+  num_workers: 2
+  seed: 42
+  device: cuda
+  log_interval: 20
+  save_dir: outputs/checkpoints
+
+eval:
+  # 评估时的采样数量与模型路径
+  sample_k: 20
+  checkpoint: outputs/checkpoints/best.pt
+
+visualize:
+  # 可视化输出目录
+  output_dir: outputs/figures

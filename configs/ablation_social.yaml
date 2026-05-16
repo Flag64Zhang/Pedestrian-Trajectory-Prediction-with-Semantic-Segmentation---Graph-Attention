@@ -25,9 +25,9 @@ model:
 train:
   # 训练超参数与保存路径
   batch_size: 32
-  epochs: 20
+  epochs: 40
   lr: 0.001
-  beta: 1.0
+  beta: 0.7
   num_workers: 2
   seed: 42
   device: cuda
@@ -36,9 +36,12 @@ train:
 
 eval:
   # 评估时的采样数量与模型路径
-  sample_k: 20
+  sample_k: 40
   checkpoint: outputs/checkpoints/social/best.pt
 
 visualize:
-  # 可视化输出目录
   output_dir: outputs/figures
+  num_images: 10
+  select_mode: best_ade
+  scan_limit: 300
+  sample_k: 40

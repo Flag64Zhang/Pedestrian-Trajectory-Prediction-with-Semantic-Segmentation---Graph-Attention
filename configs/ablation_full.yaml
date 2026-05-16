@@ -42,3 +42,4 @@ eval:
 visualize:
   # 可视化输出目录
   output_dir: outputs/figures
+  sample_k: 1

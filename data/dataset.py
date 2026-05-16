@@ -8,6 +8,8 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
+from utils.paths import resolve_path
+
 
 @dataclass
 class Sample:
@@ -113,14 +115,14 @@ class TrajectoryDataset(Dataset):
         normalize: bool = True,
         norm_eps: float = 1e-6,
     ) -> None:
-        self.split_dir = Path(split_dir)
+        self.split_dir = resolve_path(split_dir)
         self.obs_len = obs_len
         self.pred_len = pred_len
         self.skip = skip
         self.min_ped = min_ped
         self.neighbor_radius = neighbor_radius
         self.max_neighbors = max_neighbors
-        self.scene_dir = Path(scene_dir) if scene_dir else None
+        self.scene_dir = resolve_path(scene_dir) if scene_dir else None
         self.scene_ext = scene_ext
         self.transform = transform
         self.normalize = normalize

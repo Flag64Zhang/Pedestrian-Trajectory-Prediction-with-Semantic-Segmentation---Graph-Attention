@@ -4,6 +4,8 @@ import argparse
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+from utils.paths import resolve_path, setup_project_env, to_rel_path
+
 
 def _read_lines(path: Path) -> List[str]:
     return [line.strip() for line in path.read_text(encoding="utf-8", errors="ignore").splitlines()]
@@ -139,10 +141,11 @@ def _split_by_scene(
 
 
 def main() -> None:
+    setup_project_env()
     parser = argparse.ArgumentParser()
-    parser.add_argument("--eth_dir", required=True, help="Path to ewap_dataset")
-    parser.add_argument("--ucy_dir", required=True, help="Path to crowds/data")
-    parser.add_argument("--out_dir", default="data/processed")
+    parser.add_argument("--eth_dir", default="data/ewap_dataset", help="相对项目根的 ETH 数据目录")
+    parser.add_argument("--ucy_dir", default="data/crowds/data", help="相对项目根的 UCY 数据目录")
+    parser.add_argument("--out_dir", default="data/processed", help="相对项目根的输出目录")
     parser.add_argument(
         "--train_scenes",
         default="seq_eth,seq_hotel,crowds_zara01,crowds_zara02,crowds_zara03,students001",
@@ -155,9 +158,9 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    eth_dir = Path(args.eth_dir)
-    ucy_dir = Path(args.ucy_dir)
-    out_dir = Path(args.out_dir)
+    eth_dir = resolve_path(args.eth_dir)
+    ucy_dir = resolve_path(args.ucy_dir)
+    out_dir = resolve_path(args.out_dir)
 
     scenes: Dict[str, List[Tuple[int, int, float, float]]] = {}
 
@@ -178,6 +181,7 @@ def main() -> None:
     val_scenes = [s.strip() for s in args.val_scenes.split(",") if s.strip()]
 
     _split_by_scene(scenes, train_scenes, val_scenes, out_dir)
+    print(f"已写入: {to_rel_path(out_dir)}")
 
 
 if __name__ == "__main__":

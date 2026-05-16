@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
-from typing import Any, Dict
 
 import torch
 from torch.utils.data import DataLoader
@@ -12,17 +10,8 @@ from losses.cvae_loss import total_cvae_loss
 from metrics.ade_fde import ade, fde
 from models.csgat_net import CSGATNet
 from utils.io import ensure_dir, save_checkpoint
+from utils.paths import load_config, resolve_config_paths, setup_project_env
 from utils.seed import set_seed
-
-
-def _load_config(path: str | Path) -> Dict[str, Any]:
-    # 配置统一从 YAML 读取，便于复现实验。
-    try:
-        import yaml
-    except ImportError as exc:
-        raise ImportError("PyYAML is required to load configs.") from exc
-    with open(path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
 
 
 def train_one_epoch(model, loader, optimizer, device, beta):
@@ -68,11 +57,12 @@ def evaluate(model, loader, device, sample_k: int):
 
 
 def main() -> None:
+    setup_project_env()
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="configs/default.yaml")
     args = parser.parse_args()
 
-    cfg = _load_config(args.config)
+    cfg = resolve_config_paths(load_config(args.config))
     set_seed(cfg["train"]["seed"])
 
     # 优先使用配置指定设备，若无 GPU 则回退到 CPU。

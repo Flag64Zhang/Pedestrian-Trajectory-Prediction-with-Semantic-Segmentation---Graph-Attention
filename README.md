@@ -1,0 +1,2 @@
+# Pedestrian Trajectory Prediction with Semantic Segmentation & Graph Attention
+This repository implements a pedestrian trajectory prediction model that integrates semantic segmentation for scene environment modeling and graph attention (GAT) for pedestrian social interaction modeling. The model adopts a Conditional Variational Autoencoder (CVAE) framework to generate multimodal future trajectories, effectively improving prediction accuracy under complex traffic scenarios.

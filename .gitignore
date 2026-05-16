@@ -1,4 +1,5 @@
 outputs/
 .venv/
-/references/
 /.idea/
+/outputs/
+/references/

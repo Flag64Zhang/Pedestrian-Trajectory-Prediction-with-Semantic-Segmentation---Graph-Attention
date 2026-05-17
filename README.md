@@ -1,6 +1,8 @@
 
 ---
 
+[CH|简体中文](https://github.com/Flag64Zhang/Pedestrian-Trajectory-Prediction-with-Semantic-Segmentation---Graph-Attention/blob/main/README_CH.md)
+
 # Pedestrian Trajectory Prediction Based on Semantic Segmentation and Graph Attention
 
 > A deep learning model for pedestrian trajectory prediction, integrating **semantic segmentation** for scene understanding and **graph attention networks (GAT)** for social interaction modeling.
